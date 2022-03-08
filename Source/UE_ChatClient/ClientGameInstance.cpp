@@ -11,11 +11,31 @@ void UClientGameInstance::Init()
 }
 void UClientGameInstance::Test() 
 {
-	if (client->Connect()) 
+	if (client->ConnectState==false) 
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Connect Success ! ")));
-		client->SendData(TEXT("hello"));
+		client->Connect();
+		if (client->Socket->GetConnectionState() == ESocketConnectionState::SCS_Connected) 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Connect Success ! ")));
+			return;
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Connect Fail, Check your Network ! ")));
 		return;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Connect Faild - Please Retrying ")));
+	client->SendData(TEXT("LOGIN H"));
+}
+void UClientGameInstance::Login(FString msg) 
+{
+	if (client->ConnectState == false)
+	{
+		client->Connect();
+		if (client->Socket->GetConnectionState() == ESocketConnectionState::SCS_Connected)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Connect Success ! ")));
+			return;
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Connect Fail, Check your Network ! ")));
+		return;
+	}
+	client->SendData("LOGIN "+msg);
 }

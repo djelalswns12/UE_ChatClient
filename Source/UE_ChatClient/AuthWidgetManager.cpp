@@ -21,6 +21,6 @@ void UAuthWidgetManager::NativeConstruct()
 void UAuthWidgetManager::LoginCallback()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s"), *LoginInputTextBox->Text.ToString());
-	UClientGameInstance* Ins = Cast<UClientGameInstance>(GetWorld()->GetGameInstance());
-	Ins->Test();
+	UClientGameInstance* gameIns = Cast<UClientGameInstance>(GetWorld()->GetGameInstance());
+	gameIns->Login(*LoginInputTextBox->Text.ToString());
 }

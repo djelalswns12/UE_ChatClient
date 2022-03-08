@@ -20,4 +20,5 @@ protected:
 	UChatClient* client;
 public:
 	void Test();
+	void Login(FString msg);
 };

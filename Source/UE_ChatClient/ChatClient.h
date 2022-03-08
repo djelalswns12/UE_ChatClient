@@ -22,9 +22,10 @@ class UE_CHATCLIENT_API UChatClient : public UObject
 	GENERATED_BODY()
 	
 public:
-	bool Connect();
+	void Connect();
 	void SendData(FString text);
 	void ReceiveData(); 
+	bool ConnectState;
 
 	FSocket* Socket;
 	TArray<uint8> UintConvert(FString msg);

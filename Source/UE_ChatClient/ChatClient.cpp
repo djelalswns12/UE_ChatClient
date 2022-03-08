@@ -3,7 +3,7 @@
 
 #include "ChatClient.h"
 
-bool UChatClient::Connect()
+void UChatClient::Connect()
 {
 	Socket = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateSocket(NAME_Stream, TEXT("default"), false);
 	FString address = TEXT("127.0.0.1");
@@ -17,7 +17,7 @@ bool UChatClient::Connect()
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Trying to connect.")));
 
-	return Socket->Connect(*addr);
+	ConnectState= Socket->Connect(*addr);
 }
 void UChatClient::SendData(FString text) 
 {
@@ -26,6 +26,7 @@ void UChatClient::SendData(FString text)
 	uint8* msg = data.GetData();
 	int32 BytesSent = 0;
 	Socket->Send(msg, data.Num(),BytesSent);
+	
 }
 void UChatClient::ReceiveData() 
 {
