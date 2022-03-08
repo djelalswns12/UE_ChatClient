@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <iostream>
+#include <string>
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 
@@ -20,13 +22,16 @@ UCLASS()
 class UE_CHATCLIENT_API UChatClient : public UObject
 {
 	GENERATED_BODY()
-	
+protected:
+	bool ConnectionState;
+
 public:
 	void Connect();
 	void SendData(FString text);
 	void ReceiveData(); 
-	bool ConnectState;
+	bool GetConnectionState();
 
 	FSocket* Socket;
 	TArray<uint8> UintConvert(FString msg);
+	FString UintConvertToFString(TArray<uint8>& BinaryArray);
 };

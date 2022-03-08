@@ -5,9 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine.h"
-#include "Networking.h"
-#include "Sockets.h"
-#include "SocketSubsystem.h"
+#include "ClientGameInstance.h"
 #include "NetworkManager.generated.h"
 
 class ChatClient;
@@ -19,6 +17,7 @@ class UE_CHATCLIENT_API ANetworkManager : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ANetworkManager();
+	UClientGameInstance* gameIns;
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,7 +26,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	FSocket* Socket;
-	bool Connect();
+	
 };

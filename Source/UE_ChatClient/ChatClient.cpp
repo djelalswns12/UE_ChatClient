@@ -17,8 +17,9 @@ void UChatClient::Connect()
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Trying to connect.")));
 
-	ConnectState= Socket->Connect(*addr);
+	ConnectionState= Socket->Connect(*addr);
 }
+
 void UChatClient::SendData(FString text) 
 {
 	text += "\r\n";
@@ -28,9 +29,28 @@ void UChatClient::SendData(FString text)
 	Socket->Send(msg, data.Num(),BytesSent);
 	
 }
+
 void UChatClient::ReceiveData() 
 {
-
+	uint8 Buffer[1024] = { 0 };
+	int32 DataLen = 0;
+	uint32 Size;
+	TArray<uint8> ReceivedData;
+	if(Socket->HasPendingData(Size))
+	{
+		UE_LOG(LogTemp, Log, TEXT("Size %d"), Size);
+		ReceivedData.SetNum(Size);
+		int32 Read = 0;
+		Socket->Recv(ReceivedData.GetData(), ReceivedData.Num(), Read);	
+		FString s = UintConvertToFString(ReceivedData);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Data is Come : %s"), *s));
+	}
+	//if (Socket->Recv(Buffer, sizeof(Buffer) - 1, DataLen, ESocketReceiveFlags::None))
+	//{
+	//	//FString s = BytesToString(Buffer,10);
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Data is Come")));
+	//	
+	//}
 }
 TArray<uint8> UChatClient::UintConvert(FString msg)
 {
@@ -44,4 +64,15 @@ TArray<uint8> UChatClient::UintConvert(FString msg)
 		pSendData++;
 	}
 	return tr_int8;
+}
+FString UChatClient::UintConvertToFString(TArray<uint8>& BinaryArray)
+{
+	//(Create a string from a byte array!)
+	const std::string cstr(reinterpret_cast<const char*>(BinaryArray.GetData()), BinaryArray.Num());
+	//(FString can take in the c_str() of a std::string)
+	return FString(cstr.c_str());
+}
+bool UChatClient::GetConnectionState()
+{
+	return ConnectionState;
 }

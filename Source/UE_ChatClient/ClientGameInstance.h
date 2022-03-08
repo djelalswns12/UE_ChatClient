@@ -20,5 +20,7 @@ protected:
 	UChatClient* client;
 public:
 	void Test();
-	void Login(FString msg);
+	void LoginEvent(FString msg);
+	void ReceiveEvent();
+	bool GetSocketConnectionState();
 };
