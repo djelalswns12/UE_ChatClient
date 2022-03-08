@@ -7,8 +7,9 @@ public class UE_ChatClient : ModuleRules
 	public UE_ChatClient(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG" });
+
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Networking", "Sockets","UMG" });
+
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

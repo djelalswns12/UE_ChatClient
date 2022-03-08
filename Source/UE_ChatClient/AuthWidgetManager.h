@@ -9,6 +9,7 @@
 #include "Components/TextBlock.h"
 #include "Components/EditableTextBox.h"
 
+#include "ClientGameInstance.h"
 #include "AuthWidgetManager.generated.h"
 
 /**
@@ -28,6 +29,7 @@ protected:
 
 protected:
 	virtual void NativeConstruct() override;
+
 
 private:
 	// 버튼을 눌렀을 때, 호출될 델리게이트에 등록할 함수

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChatClient.h"
+
 #include "GameFramework/GameModeBase.h"
 #include <Blueprint/UserWidget.h>
 #include "ClientPlayerController.h"

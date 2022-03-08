@@ -25,6 +25,8 @@ void AUE_ChatClientGameModeBase::BeginPlay()
 
 void AUE_ChatClientGameModeBase::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
+
+
 	if (CurrentWidget != nullptr)
 	{
 		CurrentWidget->RemoveFromViewport();
