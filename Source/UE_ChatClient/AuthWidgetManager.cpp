@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "AuthWidgetManager.h"
@@ -8,13 +8,13 @@ void UAuthWidgetManager::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	// À§Á¬ ºí·çÇÁ¸°Æ®ÀÇ ¹öÆ°À» ÀÌ¸§À» ÅëÇØ °¡Á®¿Â´Ù
+	// ìœ„ì ¯ ë¸”ë£¨í”„ë¦°íŠ¸ì˜ ë²„íŠ¼ì„ ì´ë¦„ì„ í†µí•´ ê°€ì ¸ì˜¨ë‹¤
 	LoginBtn = Cast<UButton>(GetWidgetFromName(TEXT("LoginBtn")));
 
-	// À§Á¬ ºí·çÇÁ¸°Æ®ÀÇ ÅØ½ºÆ® ºí·ÏÀ» ÀÌ¸§À» ÅëÇØ °¡Á®¿Â´Ù
+	// ìœ„ì ¯ ë¸”ë£¨í”„ë¦°íŠ¸ì˜ í…ìŠ¤íŠ¸ ë¸”ë¡ì„ ì´ë¦„ì„ í†µí•´ ê°€ì ¸ì˜¨ë‹¤
 	LoginInputTextBox = Cast<UEditableTextBox>(GetWidgetFromName(TEXT("LoginInputTextBox")));
 
-	// ¹öÆ° Å¬¸¯½Ã È£ÃâµÉ µ¨¸®°ÔÀÌÆ®¿¡ ÇÔ¼ö¸¦ µî·ÏÇÑ´Ù
+	// ë²„íŠ¼ í´ë¦­ì‹œ í˜¸ì¶œë  ë¸ë¦¬ê²Œì´íŠ¸ì— í•¨ìˆ˜ë¥¼ ë“±ë¡í•œë‹¤
 	LoginBtn->OnClicked.AddDynamic(this, &UAuthWidgetManager::LoginCallback);
 }
 
@@ -22,4 +22,22 @@ void UAuthWidgetManager::LoginCallback()
 {
 	UClientGameInstance* gameIns = Cast<UClientGameInstance>(GetWorld()->GetGameInstance());
 	gameIns->LoginEvent(*LoginInputTextBox->Text.ToString());
+}
+void UAuthWidgetManager::AddText(FString txt) {
+	FString testString = TEXT("í•œê¸€ í…ŒìŠ¤íŠ¸ ì™„ë£Œ");
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *txt);
+
+	UTextBlock* tstText = NewObject<UTextBlock>(UTextBlock::StaticClass());
+	tstText->SetText(FText::FromString(txt));
+
+	UScrollBox* scrollBox=Cast<UScrollBox>(GetWidgetFromName(TEXT("ScrollBox")));
+	scrollBox->AddChild(tstText);
+	scrollBox->ScrollToEnd();
+
+	//UTextBlock* tstText = WidgetTree->ConstructObject<UTextBlock>(UTextBlock::StaticClass(), this);
+	//tstText->SetText(FText::FromString(TEXT("Test Button")));
+	//UButton* tstBtn = WidgetTree->ConstructObject<UButton>(UButton::StaticClass(), this);
+	//tstBtn->AddChild(tstText);
+	
 }

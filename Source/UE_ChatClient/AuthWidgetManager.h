@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,8 +8,11 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Components/EditableTextBox.h"
+#include "Components/ScrollBox.h"
+
 
 #include "ClientGameInstance.h"
+
 #include "AuthWidgetManager.generated.h"
 
 /**
@@ -30,9 +33,10 @@ protected:
 protected:
 	virtual void NativeConstruct() override;
 
-
+public:
+	void AddText(FString txt);
 private:
-	// ¹öÆ°À» ´­·¶À» ¶§, È£ÃâµÉ µ¨¸®°ÔÀÌÆ®¿¡ µî·ÏÇÒ ÇÔ¼ö
+	// ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ, í˜¸ì¶œë  ë¸ë¦¬ê²Œì´íŠ¸ì— ë“±ë¡í•  í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable)
 		void LoginCallback();
 };

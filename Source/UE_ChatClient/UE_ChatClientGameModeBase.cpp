@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 
 #include "UE_ChatClientGameModeBase.h"
@@ -20,13 +20,10 @@ void AUE_ChatClientGameModeBase::BeginPlay()
 	Super::BeginPlay();
 	//PlayerControllerClass = AClientPlayerController::StaticClass();
 	ChangeMenuWidget(StartingWidgetClass);
-	
 }
 
 void AUE_ChatClientGameModeBase::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
-
-
 	if (CurrentWidget != nullptr)
 	{
 		CurrentWidget->RemoveFromViewport();

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 #include "NetworkManager.h"
 
 
@@ -23,7 +23,5 @@ void ANetworkManager::BeginPlay()
 void ANetworkManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (gameIns->GetSocketConnectionState()) {
-		gameIns->ReceiveEvent();
-	}
+	gameIns->ReceiveEvent();
 }

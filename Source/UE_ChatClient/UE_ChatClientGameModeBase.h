@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -8,6 +8,7 @@
 #include "GameFramework/GameModeBase.h"
 #include <Blueprint/UserWidget.h>
 #include "ClientPlayerController.h"
+#include "AuthWidgetManager.h"
 
 #include "UE_ChatClientGameModeBase.generated.h"
 
@@ -29,6 +30,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG_Game")
 		TSubclassOf<UUserWidget> StartingWidgetClass;
 
+public:
 	UPROPERTY()
 		UUserWidget* CurrentWidget;
 
