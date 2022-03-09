@@ -30,7 +30,7 @@ class UE_CHATCLIENT_API UAuthWidgetManager : public UUserWidget
 {
 	GENERATED_BODY()
 
-protected:
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class UButton* LoginBtn;
 
@@ -43,16 +43,26 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UCanvasPanel* PopUpPanel;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		class UTextBlock* PopUpMsg;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		class UTextBlock* PopUpBtnMsg;
 protected:
 	virtual void NativeConstruct() override;
 	UClientGameInstance* gameIns;
 
 public:
 	void AddText(FString txt);
-private:
 	// 버튼을 눌렀을 때, 호출될 델리게이트에 등록할 함수
 	UFUNCTION(BlueprintCallable)
 		void LoginCallback();
 	UFUNCTION(BlueprintCallable)
 		void ConnectCallback();
+	UFUNCTION(BlueprintCallable)
+		void ConnectFail();
+	UFUNCTION(BlueprintCallable)
+		void LoginIdMiss();
+	UFUNCTION(BlueprintCallable)
+		void PopUp(FString mainMsg, FString btnMsg, bool editBox);
 };

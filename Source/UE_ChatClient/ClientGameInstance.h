@@ -26,7 +26,9 @@ protected:
 
 	
 public:
-
+	class UAuthWidgetManager* AuthWidget;
+	class ULobbyWidgetManager* LobbyWidget;
+	AUE_ChatClientGameModeBase* GameMode;
 	class UChatClient* client;
 	void Test();
 	void LoginEvent(FString name);

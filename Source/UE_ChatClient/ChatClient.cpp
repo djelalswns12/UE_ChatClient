@@ -23,7 +23,6 @@ bool UChatClient::Connect()
 	}
 	return false;
 }
-
 void UChatClient::SendData(FString text)
 {
 	setlocale(LC_ALL, "korean");
@@ -43,29 +42,9 @@ void UChatClient::SendData(FString text)
 	//auto data = UintConvert(text);
 	Socket->Send(arr.GetData(), len, BytesSent);
 }
-void UChatClient::Excute()
+void UChatClient::Excute(FString data)
 {
-	if (!OrderBuffer.IsEmpty()) {
-		FString data;
-		OrderBuffer.Dequeue(data);
 
-		TArray<FString> outData;
-
-		data.ParseIntoArray(outData, TEXT("<H>"));
-
-		UE_LOG(LogTemp, Log, TEXT("\nHEADER NAME IS : %s\n"), *outData[0]);
-
-		if (outData[0].Find(TEXT("LOGIN")) >= 0)
-		{
-			UE_LOG(LogTemp, Log, TEXT("LOGIN INFO"));
-	/*		GameMode = Cast<AUE_ChatClientGameModeBase>(GetWorld()->GetAuthGameMode());
-			GameMode->ChangeMenuWidget(GameMode->LobbyWidget);*/
-		}
-		if (outData[0].Find(TEXT("US")) >= 0)
-		{
-			UE_LOG(LogTemp, Log, TEXT("USERS INFO"));
-		}
-	}
 }
 void UChatClient::ReceiveData()
 {
@@ -83,14 +62,16 @@ void UChatClient::ReceiveData()
 		wchar_t* wc = new wchar_t[DataBufferPoint + 1];
 		mbstowcs(wc, (char*)DataBuffer, DataBufferPoint + 1);
 		FString data(wc);
-		UE_LOG(LogTemp, Log, TEXT("\n   Buffer List\n ----------\n\n%s\n\n------%d\n"), *data, (CurHeader == ""));
-		OrderBuffer.Enqueue(data);
+		UE_LOG(LogTemp, Log, TEXT("\n\n  Buffer List\n ----------\n\n%s\n\n---------\n\n"), *data);
+		CurOrder = data;
+		//OrderBuffer.Enqueue(data);
+		//Excute(data);
 		for (int i = 0; i < DataBufferPoint; i++) {
 			DataBuffer[i] = 0;
 		}
 		DataBufferPoint = 0;
 	}
-	Excute();
+	//Excute();
 }
 bool UChatClient::GetConnectionState()
 {

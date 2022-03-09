@@ -24,4 +24,5 @@ void ANetworkManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	gameIns->ReceiveEvent();
+	
 }

@@ -20,7 +20,9 @@ AUE_ChatClientGameModeBase::AUE_ChatClientGameModeBase() {
 
 
 }
-
+void AUE_ChatClientGameModeBase::SetLobby() {
+	ChangeMenuWidget(LobbyWidget);
+}
 void AUE_ChatClientGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();

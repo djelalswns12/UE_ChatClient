@@ -12,30 +12,31 @@
 #include "SocketSubsystem.h"
 #include <iostream>
 #include <locale.h>
-#include "UE_ChatClientGameModeBase.h"
 #include "ChatClient.generated.h"
 
 /**
  * 
  */
-class AUE_ChatClientGameModeBase;
 UCLASS()
 class UE_CHATCLIENT_API UChatClient : public UObject
 {
 	GENERATED_BODY()
 protected:
 	bool ConnectionState;
+	
 public:
-	AUE_ChatClientGameModeBase* GameMode;
+
 	uint8 DataBuffer[1024];
-	TQueue<FString> OrderBuffer;
+	bool IsLogin;
 	int DataBufferPoint;
 	bool Connect();
 	void SendData(FString text);
 	void ReceiveData(); 
 	bool GetConnectionState();
-	void Excute();
+	void Excute(FString data);
 
-	FString CurHeader;
+	FString CurOrder;
 	FSocket* Socket;
+
+
 };

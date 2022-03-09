@@ -18,6 +18,12 @@ void UAuthWidgetManager::NativeConstruct()
 	LoginInputTextBox = Cast<UEditableTextBox>(GetWidgetFromName(TEXT("LoginInputTextBox")));
 	PopUpPanel= Cast<UCanvasPanel>(GetWidgetFromName(TEXT("PopUPPanel")));
 
+	LoginInputTextBox = Cast<UEditableTextBox>(GetWidgetFromName(TEXT("LoginInputTextBox")));
+	PopUpPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("PopUPPanel")));
+
+	PopUpMsg = Cast<UTextBlock>(GetWidgetFromName(TEXT("PopUpMsg")));
+	PopUpBtnMsg = Cast<UTextBlock>(GetWidgetFromName(TEXT("PopUpBtnMsg")));
+
 	// 버튼 클릭시 호출될 델리게이트에 함수를 등록한다
 	LoginBtn->OnClicked.AddDynamic(this, &UAuthWidgetManager::LoginCallback);
 	ConnectBtn->OnClicked.AddDynamic(this, &UAuthWidgetManager::ConnectCallback);
@@ -25,14 +31,36 @@ void UAuthWidgetManager::NativeConstruct()
 void UAuthWidgetManager::ConnectCallback()
 {
 	//gameIns->LoginEvent(*LoginInputTextBox->Text.ToString());
-	PopUpPanel->SetVisibility(ESlateVisibility::Visible);
+	//PopUpPanel->SetVisibility(ESlateVisibility::Visible);
 	gameIns->ConnectEvent();
 }
 void UAuthWidgetManager::LoginCallback()
 {
+	PopUpPanel->SetVisibility(ESlateVisibility::Hidden);
 	gameIns->LoginEvent(*LoginInputTextBox->Text.ToString());
 }
-void UAuthWidgetManager::AddText(FString txt) {
+void UAuthWidgetManager::LoginIdMiss()
+{
+	
+}
+void UAuthWidgetManager::ConnectFail()
+{
+	
+}
+void UAuthWidgetManager::PopUp(FString mainMsg, FString btnMsg, bool editBox)
+{
+	PopUpPanel->SetVisibility(ESlateVisibility::Visible);
+	PopUpMsg->SetText(FText::FromString(mainMsg));
+	PopUpBtnMsg->SetText(FText::FromString(btnMsg));
+	if (editBox) {
+		LoginInputTextBox->SetVisibility(ESlateVisibility::Visible);
+	}
+	else {
+		LoginInputTextBox->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+void UAuthWidgetManager::AddText(FString txt) 
+{
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *txt);
 
 	UTextBlock* tstText = NewObject<UTextBlock>(UTextBlock::StaticClass());
@@ -41,7 +69,6 @@ void UAuthWidgetManager::AddText(FString txt) {
 	UScrollBox* scrollBox=Cast<UScrollBox>(GetWidgetFromName(TEXT("ScrollBox")));
 	scrollBox->AddChild(tstText);
 	scrollBox->ScrollToEnd();
-
 	
 	//UTextBlock* tstText = WidgetTree->ConstructObject<UTextBlock>(UTextBlock::StaticClass(), this);
 	//tstText->SetText(FText::FromString(TEXT("Test Button")));
