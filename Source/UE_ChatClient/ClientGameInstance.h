@@ -6,12 +6,16 @@
 #include "ChatClient.h"
 #include "Engine/GameInstance.h"
 #include "UE_ChatClientGameModeBase.h"
+
 #include "AuthWidgetManager.h"
+#include "LobbyWidgetManager.h"
+
 #include "ClientGameInstance.generated.h"
 
 /**
  * 
  */
+
 UCLASS()
 class UE_CHATCLIENT_API UClientGameInstance : public UGameInstance
 {
@@ -22,9 +26,12 @@ protected:
 
 	
 public:
-	UChatClient* client;
+
+	class UChatClient* client;
 	void Test();
-	void LoginEvent(FString msg);
+	void LoginEvent(FString name);
+	void ConnectEvent();
 	void ReceiveEvent();
+	void SendMsg(FString msg);
 	bool GetSocketConnectionState();
 };

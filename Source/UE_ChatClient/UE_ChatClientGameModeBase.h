@@ -27,11 +27,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG_Game")
-		TSubclassOf<UUserWidget> StartingWidgetClass;
 
 public:
 	UPROPERTY()
 		UUserWidget* CurrentWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG_Game")
+		TSubclassOf<UUserWidget> AuthWidget;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG_Game")
+		TSubclassOf<UUserWidget> LobbyWidget;
 };

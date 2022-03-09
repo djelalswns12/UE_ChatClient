@@ -10,6 +10,7 @@ void  AClientPlayerController::BeginPlay()
 	FInputModeGameAndUI inputMode;
 	inputMode.SetHideCursorDuringCapture(false);
 	SetInputMode(inputMode);
+
 }
 
 AClientPlayerController::AClientPlayerController()

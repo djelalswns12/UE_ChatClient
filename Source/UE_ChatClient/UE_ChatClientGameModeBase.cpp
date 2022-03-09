@@ -4,11 +4,17 @@
 #include "UE_ChatClientGameModeBase.h"
 
 AUE_ChatClientGameModeBase::AUE_ChatClientGameModeBase() {
-	static ConstructorHelpers::FClassFinder<UUserWidget> widget(TEXT("/Game/AuthWidget"));
-	if (widget.Succeeded() && widget.Class != NULL)
+	static ConstructorHelpers::FClassFinder<UUserWidget> Awidget(TEXT("/Game/AuthWidget"));
+	if (Awidget.Succeeded() && Awidget.Class != NULL)
 	{
-		StartingWidgetClass = widget.Class;
+		AuthWidget = Awidget.Class;
 	}
+	static ConstructorHelpers::FClassFinder<UUserWidget> Lwidget(TEXT("/Game/LobbyWidget"));
+	if (Lwidget.Succeeded() && Lwidget.Class != NULL)
+	{
+		LobbyWidget = Lwidget.Class;
+	}
+
 	DefaultPawnClass = APawn::StaticClass();
 	PlayerControllerClass = AClientPlayerController::StaticClass();
 
@@ -18,8 +24,8 @@ AUE_ChatClientGameModeBase::AUE_ChatClientGameModeBase() {
 void AUE_ChatClientGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	//PlayerControllerClass = AClientPlayerController::StaticClass();
-	ChangeMenuWidget(StartingWidgetClass);
+	PlayerControllerClass = AClientPlayerController::StaticClass();
+	ChangeMenuWidget(AuthWidget);
 }
 
 void AUE_ChatClientGameModeBase::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
