@@ -23,7 +23,7 @@ bool UChatClient::Connect()
 	}
 	return false;
 }
-void UChatClient::SendData(FString text)
+void UChatClient::SendData(FString& text)
 {
 	setlocale(LC_ALL, "korean");
 	text += "\r\n";
@@ -42,13 +42,14 @@ void UChatClient::SendData(FString text)
 	//auto data = UintConvert(text);
 	Socket->Send(arr.GetData(), len, BytesSent);
 }
-void UChatClient::Excute(FString data)
-{
-
-}
 void UChatClient::ReceiveData()
 {
 	uint32 Size = 0;
+	if (Socket!=nullptr &&Socket->GetConnectionState() != ESocketConnectionState::SCS_Connected) 
+	{
+		UE_LOG(LogTemp, Log, TEXT("SOCKET ERROR %d"));
+		return;
+	}
 	if (Socket->HasPendingData(Size))
 	{
 		int read = 0;

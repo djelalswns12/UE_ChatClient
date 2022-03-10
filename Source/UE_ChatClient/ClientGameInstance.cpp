@@ -17,7 +17,6 @@ void UClientGameInstance::Test()
 }
 void UClientGameInstance::ReceiveEvent()
 {
-
 	if (GetSocketConnectionState()) 
 	{
 		GameMode = Cast<AUE_ChatClientGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -50,13 +49,19 @@ void UClientGameInstance::ReceiveEvent()
 					}
 					else if (SetOrder.Find(TEXT("US")) >= 0)
 					{
-						TArray<FString> a;
-						int ra = FMath::RandRange(2, 15);
-						UE_LOG(LogTemp, Log, TEXT("BTN SPAWN CNT : %d "),ra);
-						for (int t = 0; t < ra; t++) {
-							a.Add("hi"+t);
-						}
-						Cast<ULobbyWidgetManager>(GameMode->CurrentWidget)->ChangeRoomList(a);
+						TArray<FString> userListData;
+						data.ParseIntoArray(userListData, TEXT("\r\n"));
+						userListData.RemoveAt(0);
+						userListData.RemoveAt(userListData.Num() - 1);
+						Cast<ULobbyWidgetManager>(GameMode->CurrentWidget)->ChangeUserList(userListData);
+					}
+					else if (SetOrder.Find(TEXT("LT")) >= 0)
+					{
+						TArray<FString> roomListData;
+						data.ParseIntoArray(roomListData, TEXT("\r\n"));
+						roomListData.RemoveAt(0);
+						roomListData.RemoveAt(roomListData.Num() - 1);
+						Cast<ULobbyWidgetManager>(GameMode->CurrentWidget)->ChangeRoomList(roomListData);
 					}
 					else if (SetOrder.Find(TEXT("MSG")) >= 0)
 					{
@@ -66,7 +71,7 @@ void UClientGameInstance::ReceiveEvent()
 						}
 					}
 					UE_LOG(LogTemp, Log, TEXT("\n %d번째>>> HEADER NAME IS : %s\n"),i,*SetOrder);
-					SetOrder = "";
+					SetOrder.Empty();
 					continue;
 				}
 				//UE_LOG(LogTemp, Log, TEXT("\n %d번째>>> 데이터 소실  ( set : %s , outd[%d] : %s ) \n"), i,*SetOrder,i,*outData[i]);
@@ -76,9 +81,10 @@ void UClientGameInstance::ReceiveEvent()
 		}
 	}
 }
-void UClientGameInstance::LoginEvent(FString name) 
+void UClientGameInstance::LoginEvent(FString& name)
 {
-	SendMsg("LOGIN/U " + name);
+	FString data = "LOGIN/U " + name;
+	SendMsg(data);
 }
 void UClientGameInstance::ConnectEvent()
 {
@@ -91,7 +97,7 @@ void UClientGameInstance::ConnectEvent()
 	}
 	return;
 }
-void UClientGameInstance::SendMsg(FString msg) 
+void UClientGameInstance::SendMsg(FString& msg)
 {
 	client->SendData(msg);
 }

@@ -24,16 +24,18 @@ class UE_CHATCLIENT_API UClientGameInstance : public UGameInstance
 protected:
 	virtual void Init() override;
 
-	
 public:
 	class UAuthWidgetManager* AuthWidget;
 	class ULobbyWidgetManager* LobbyWidget;
 	AUE_ChatClientGameModeBase* GameMode;
 	class UChatClient* client;
+
+public:
+
 	void Test();
-	void LoginEvent(FString name);
+	void LoginEvent(FString& name);
 	void ConnectEvent();
 	void ReceiveEvent();
-	void SendMsg(FString msg);
+	void SendMsg(FString& msg);
 	bool GetSocketConnectionState();
 };

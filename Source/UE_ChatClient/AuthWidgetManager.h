@@ -14,9 +14,6 @@
 #include "Components/PanelWidget.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
-#include "ClientGameInstance.h"
-
-
 
 #include "AuthWidgetManager.generated.h"
 

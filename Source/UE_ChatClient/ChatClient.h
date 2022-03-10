@@ -14,9 +14,7 @@
 #include <locale.h>
 #include "ChatClient.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class UE_CHATCLIENT_API UChatClient : public UObject
 {
@@ -25,18 +23,15 @@ protected:
 	bool ConnectionState;
 	
 public:
-
 	uint8 DataBuffer[1024];
 	bool IsLogin;
 	int DataBufferPoint;
-	bool Connect();
-	void SendData(FString text);
-	void ReceiveData(); 
-	bool GetConnectionState();
-	void Excute(FString data);
-
 	FString CurOrder;
 	FSocket* Socket;
 
-
+public:
+	bool Connect();
+	void SendData(FString& text);
+	void ReceiveData(); 
+	bool GetConnectionState();
 };

@@ -2,7 +2,7 @@
 
 
 #include "AuthWidgetManager.h"
-
+#include "ClientGameInstance.h"
 
 void UAuthWidgetManager::NativeConstruct()
 {
@@ -17,9 +17,6 @@ void UAuthWidgetManager::NativeConstruct()
 	// 위젯 블루프린트의 텍스트 블록을 이름을 통해 가져온다
 	LoginInputTextBox = Cast<UEditableTextBox>(GetWidgetFromName(TEXT("LoginInputTextBox")));
 	PopUpPanel= Cast<UCanvasPanel>(GetWidgetFromName(TEXT("PopUPPanel")));
-
-	LoginInputTextBox = Cast<UEditableTextBox>(GetWidgetFromName(TEXT("LoginInputTextBox")));
-	PopUpPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("PopUPPanel")));
 
 	PopUpMsg = Cast<UTextBlock>(GetWidgetFromName(TEXT("PopUpMsg")));
 	PopUpBtnMsg = Cast<UTextBlock>(GetWidgetFromName(TEXT("PopUpBtnMsg")));
@@ -37,7 +34,8 @@ void UAuthWidgetManager::ConnectCallback()
 void UAuthWidgetManager::LoginCallback()
 {
 	PopUpPanel->SetVisibility(ESlateVisibility::Hidden);
-	gameIns->LoginEvent(*LoginInputTextBox->Text.ToString());
+	FString data = LoginInputTextBox->Text.ToString();
+	gameIns->LoginEvent(data);
 }
 void UAuthWidgetManager::LoginIdMiss()
 {
@@ -49,11 +47,11 @@ void UAuthWidgetManager::ConnectFail()
 }
 void UAuthWidgetManager::PopUp(FString mainMsg, FString btnMsg, bool editBox)
 {
-	PopUpPanel->SetVisibility(ESlateVisibility::Visible);
+	PopUpPanel->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	PopUpMsg->SetText(FText::FromString(mainMsg));
 	PopUpBtnMsg->SetText(FText::FromString(btnMsg));
 	if (editBox) {
-		LoginInputTextBox->SetVisibility(ESlateVisibility::Visible);
+		LoginInputTextBox->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	}
 	else {
 		LoginInputTextBox->SetVisibility(ESlateVisibility::Hidden);
