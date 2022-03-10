@@ -45,9 +45,14 @@ void UChatClient::SendData(FString& text)
 void UChatClient::ReceiveData()
 {
 	uint32 Size = 0;
-	if (Socket!=nullptr &&Socket->GetConnectionState() != ESocketConnectionState::SCS_Connected) 
+	if (Socket==nullptr) 
 	{
-		UE_LOG(LogTemp, Log, TEXT("SOCKET ERROR %d"));
+		UE_LOG(LogTemp, Log, TEXT("SOCKET ERROR 1"));
+		return;
+	}
+	if (Socket->GetConnectionState() != ESocketConnectionState::SCS_Connected)
+	{
+		UE_LOG(LogTemp, Log, TEXT("SOCKET ERROR 2"));
 		return;
 	}
 	if (Socket->HasPendingData(Size))
@@ -63,7 +68,7 @@ void UChatClient::ReceiveData()
 		wchar_t* wc = new wchar_t[DataBufferPoint + 1];
 		mbstowcs(wc, (char*)DataBuffer, DataBufferPoint + 1);
 		FString data(wc);
-		UE_LOG(LogTemp, Log, TEXT("\n\n  Buffer List\n ----------\n\n%s\n\n---------\n\n"), *data);
+		UE_LOG(LogTemp, Log, TEXT("\n Recv Data ->> %s"), *data);
 		CurOrder = data;
 		//OrderBuffer.Enqueue(data);
 		//Excute(data);

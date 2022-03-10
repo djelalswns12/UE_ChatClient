@@ -21,9 +21,27 @@ void UAuthWidgetManager::NativeConstruct()
 	PopUpMsg = Cast<UTextBlock>(GetWidgetFromName(TEXT("PopUpMsg")));
 	PopUpBtnMsg = Cast<UTextBlock>(GetWidgetFromName(TEXT("PopUpBtnMsg")));
 
+	PopUp2Panel= Cast<UCanvasPanel>(GetWidgetFromName(TEXT("PopUP2Panel")));
+	PopUp2Btn=Cast<UButton>(GetWidgetFromName(TEXT("PopUp2Btn")));
+
+
 	// 버튼 클릭시 호출될 델리게이트에 함수를 등록한다
 	LoginBtn->OnClicked.AddDynamic(this, &UAuthWidgetManager::LoginCallback);
 	ConnectBtn->OnClicked.AddDynamic(this, &UAuthWidgetManager::ConnectCallback);
+	PopUp2Btn->OnClicked.AddDynamic(this, &UAuthWidgetManager::PopUp2Visible);
+
+
+}
+void UAuthWidgetManager::PopUp2Visible()
+{
+	if (PopUp2Panel->GetVisibility() == ESlateVisibility::Hidden)
+	{
+		PopUp2Panel->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+	}
+	else
+	{
+		PopUp2Panel->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 void UAuthWidgetManager::ConnectCallback()
 {
@@ -33,7 +51,7 @@ void UAuthWidgetManager::ConnectCallback()
 }
 void UAuthWidgetManager::LoginCallback()
 {
-	PopUpPanel->SetVisibility(ESlateVisibility::Hidden);
+	//PopUpPanel->SetVisibility(ESlateVisibility::Hidden);
 	FString data = LoginInputTextBox->Text.ToString();
 	gameIns->LoginEvent(data);
 }
@@ -68,6 +86,8 @@ void UAuthWidgetManager::AddText(FString txt)
 	scrollBox->AddChild(tstText);
 	scrollBox->ScrollToEnd();
 	
+
+
 	//UTextBlock* tstText = WidgetTree->ConstructObject<UTextBlock>(UTextBlock::StaticClass(), this);
 	//tstText->SetText(FText::FromString(TEXT("Test Button")));
 	//UButton* tstBtn = WidgetTree->ConstructObject<UButton>(UButton::StaticClass(), this);

@@ -45,6 +45,14 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class UTextBlock* PopUpBtnMsg;
+
+
+	//PopUp2Pannel
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		class UCanvasPanel* PopUp2Panel;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		class UButton* PopUp2Btn;
+
 protected:
 	virtual void NativeConstruct() override;
 	UClientGameInstance* gameIns;
@@ -62,4 +70,6 @@ public:
 		void LoginIdMiss();
 	UFUNCTION(BlueprintCallable)
 		void PopUp(FString mainMsg, FString btnMsg, bool editBox);
+	UFUNCTION(BlueprintCallable)
+		void PopUp2Visible();
 };

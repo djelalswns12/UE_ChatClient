@@ -29,13 +29,17 @@ public:
 	class ULobbyWidgetManager* LobbyWidget;
 	AUE_ChatClientGameModeBase* GameMode;
 	class UChatClient* client;
-
+	FString SettingRoomNumber;
+	FString SettingUserName;
 public:
-
+	void SetSettingUserName(FString data);
+	void SetSettingRoomName(FString data);
 	void Test();
 	void LoginEvent(FString& name);
 	void ConnectEvent();
 	void ReceiveEvent();
 	void SendMsg(FString& msg);
 	bool GetSocketConnectionState();
+	void OnUserPopUp(TArray<FString>& data);
+	void OnRoomEnterPopUp(TArray<FString>& data);
 };
